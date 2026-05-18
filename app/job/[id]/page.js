@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import api from '../../../lib/axios';
 
 export default function JobDetailPage() {
   const params = useParams();
@@ -23,14 +24,10 @@ export default function JobDetailPage() {
 
   const fetchJobDetails = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/jobs/${id}`);
-      if (!res.ok) {
-        throw new Error('Failed to fetch job details');
-      }
-      const data = await res.json();
-      setJob(data);
+      const res = await api.get(`/jobs/${id}`);
+      setJob(res.data);
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.error || err.message);
     } finally {
       setLoading(false);
     }
@@ -39,22 +36,12 @@ export default function JobDetailPage() {
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
     setIsUpdating(true);
-    
+
     try {
-      const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus })
-      });
-      
-      if (!res.ok) {
-        throw new Error('Failed to update status');
-      }
-      
-      const updatedJob = await res.json();
-      setJob(updatedJob);
+      const res = await api.patch(`/jobs/${id}`, { status: newStatus });
+      setJob(res.data);
     } catch (err) {
-      alert(err.message);
+      alert(err.response?.data?.error || err.message);
     } finally {
       setIsUpdating(false);
     }
@@ -64,23 +51,13 @@ export default function JobDetailPage() {
     if (!confirm('Are you sure you want to delete this job request?')) {
       return;
     }
-    
+
     setIsDeleting(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (!res.ok) {
-        throw new Error('Failed to delete job request');
-      }
-      
+      await api.delete(`/jobs/${id}`);
       router.push('/');
     } catch (err) {
-      alert(err.message);
+      alert(err.response?.data?.error || err.message);
       setIsDeleting(false);
     }
   };
@@ -111,11 +88,10 @@ export default function JobDetailPage() {
               value={job.status}
               onChange={handleStatusChange}
               disabled={isUpdating}
-              className={`bg-white border border-gray-300 rounded-md shadow-sm p-2 text-sm font-medium focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all disabled:opacity-60 ${
-                job.status === 'Open' ? 'text-green-700' :
+              className={`bg-white border border-gray-300 rounded-md shadow-sm p-2 text-sm font-medium focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all disabled:opacity-60 ${job.status === 'Open' ? 'text-green-700' :
                 job.status === 'In Progress' ? 'text-blue-700' :
-                'text-gray-700'
-              }`}
+                  'text-gray-700'
+                }`}
             >
               <option value="Open">Open</option>
               <option value="In Progress">In Progress</option>

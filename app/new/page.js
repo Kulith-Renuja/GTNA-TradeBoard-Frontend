@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import api from '../../lib/axios';
 
 export default function NewJobPage() {
   const router = useRouter();
@@ -50,23 +51,11 @@ export default function NewJobPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:5000/api/jobs', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Failed to create job request');
-      }
-
+      const res = await api.post('/jobs', formData);
       router.push('/');
     } catch (err) {
-      setError(err.message);
+      // Axios wraps the response error in err.response.data
+      setError(err.response?.data?.error || err.message || 'Failed to create job request');
       setLoading(false);
     }
   };

@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import api from '../../lib/axios';
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -30,24 +31,15 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || `Failed to ${isLogin ? 'login' : 'register'}`);
-      }
+      const endpoint = isLogin ? '/auth/login' : '/auth/register';
+      const res = await api.post(endpoint, formData);
+      const data = res.data;
 
       if (isLogin) {
         // Save token and username to localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
-        
+
         // Redirect to Home
         router.push('/');
         // Simple reload to ensure Navbar updates
@@ -61,7 +53,7 @@ export default function LoginPage() {
         // Actually let's do a simple alert or just set a success message.
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.error || err.message);
     } finally {
       setLoading(false);
     }

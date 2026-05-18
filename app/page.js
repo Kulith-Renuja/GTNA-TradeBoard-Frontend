@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import api from '../lib/axios';
 
 export default function HomePage() {
   const [jobs, setJobs] = useState([]);
@@ -21,26 +22,14 @@ export default function HomePage() {
   const fetchJobs = async () => {
     setLoading(true);
     try {
-      // Force clean URL generation using native URL parsing
-      const url = new URL('http://localhost:5000/api/jobs');
-      
-      if (category) url.searchParams.append('category', category);
-      if (search) url.searchParams.append('search', search.trim());
-
-      console.log("Fetching from API URL:", url.toString()); // For easy debugging in terminal
-
-      const res = await fetch(url.toString(), {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store' // Prevents Next.js from caching empty search results
+      const res = await api.get('/jobs', {
+        params: {
+          category: category || undefined,
+          search: search ? search.trim() : undefined,
+        }
       });
 
-      if (!res.ok) throw new Error('Failed to fetch jobs');
-      
-      const data = await res.json();
-      setJobs(data);
+      setJobs(res.data);
     } catch (error) {
       console.error('Error fetching jobs:', error);
     } finally {
@@ -97,8 +86,8 @@ export default function HomePage() {
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-xl font-semibold text-gray-900 line-clamp-1">{job.title}</h2>
                 <span className={`px-2 py-1 text-xs font-semibold rounded-full ${job.status === 'Open' ? 'bg-green-100 text-green-800' :
-                    job.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                      'bg-gray-100 text-gray-800'
+                  job.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                    'bg-gray-100 text-gray-800'
                   }`}>
                   {job.status}
                 </span>
