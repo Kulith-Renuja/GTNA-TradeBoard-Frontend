@@ -7,7 +7,7 @@ export default function NewJobPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -61,7 +61,7 @@ export default function NewJobPage() {
   return (
     <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Post a New Job Request</h1>
-      
+
       {error && (
         <div className="mb-6 p-4 bg-red-50 text-[#E31837] border border-red-200 rounded-md">
           {error}
