@@ -1,12 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function NewJobPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      router.push('/login');
+    } else {
+      setToken(storedToken);
+    }
+  }, [router]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -42,7 +52,10 @@ export default function NewJobPage() {
     try {
       const res = await fetch('http://localhost:5000/api/jobs', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(formData)
       });
 
@@ -57,6 +70,8 @@ export default function NewJobPage() {
       setLoading(false);
     }
   };
+
+  if (!token) return null; // Avoid flashing the form before redirect
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">

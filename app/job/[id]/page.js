@@ -14,8 +14,10 @@ export default function JobDetailPage() {
   const [error, setError] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
+    setToken(localStorage.getItem('token'));
     fetchJobDetails();
   }, [id]);
 
@@ -66,7 +68,10 @@ export default function JobDetailPage() {
     setIsDeleting(true);
     try {
       const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
       
       if (!res.ok) {
@@ -141,15 +146,17 @@ export default function JobDetailPage() {
           </div>
         </div>
 
-        <div className="flex justify-end">
-          <button
-            onClick={handleDelete}
-            disabled={isDeleting}
-            className="px-6 py-2 border border-red-200 text-red-500 hover:bg-red-50 hover:border-red-500 font-medium rounded-md transition-colors duration-200 disabled:opacity-50"
-          >
-            {isDeleting ? 'Deleting...' : 'Delete Request'}
-          </button>
-        </div>
+        {token && (
+          <div className="flex justify-end">
+            <button
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="px-6 py-2 border border-red-200 text-red-500 hover:bg-red-50 hover:border-red-500 font-medium rounded-md transition-colors duration-200 disabled:opacity-50"
+            >
+              {isDeleting ? 'Deleting...' : 'Delete Request'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
