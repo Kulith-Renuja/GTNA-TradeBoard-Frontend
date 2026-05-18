@@ -76,7 +76,7 @@ export default function NewJobPage() {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full border-gray-300 bg-white text-gray-900 placeholder-gray-400 rounded-md shadow-sm p-2 border focus:border-[#E31837] focus:ring-[#E31837]"
+            className="w-full bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all"
             placeholder="e.g. Fix leaking pipe"
             required
           />
@@ -89,7 +89,7 @@ export default function NewJobPage() {
             value={formData.description}
             onChange={handleChange}
             rows="4"
-            className="w-full border-gray-300 bg-white text-gray-900 placeholder-gray-400 rounded-md shadow-sm p-2 border focus:border-[#E31837] focus:ring-[#E31837]"
+            className="w-full bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all"
             placeholder="Describe the issue in detail"
             required
           ></textarea>
@@ -102,7 +102,7 @@ export default function NewJobPage() {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full border-gray-300 bg-white text-gray-900 placeholder-gray-400 rounded-md shadow-sm p-2 border focus:border-[#E31837] focus:ring-[#E31837]"
+              className="w-full bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all"
             >
               <option value="">Select a category</option>
               <option value="Plumbing">Plumbing</option>
@@ -119,7 +119,7 @@ export default function NewJobPage() {
               name="location"
               value={formData.location}
               onChange={handleChange}
-              className="w-full border-gray-300 bg-white text-gray-900 placeholder-gray-400 rounded-md shadow-sm p-2 border focus:border-[#E31837] focus:ring-[#E31837]"
+              className="w-full bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all"
               placeholder="e.g. 123 Main St"
             />
           </div>
@@ -133,7 +133,7 @@ export default function NewJobPage() {
               name="contactName"
               value={formData.contactName}
               onChange={handleChange}
-              className="w-full border-gray-300 bg-white text-gray-900 placeholder-gray-400 rounded-md shadow-sm p-2 border focus:border-[#E31837] focus:ring-[#E31837]"
+              className="w-full bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all"
               placeholder="e.g. John Doe"
             />
           </div>
@@ -145,7 +145,7 @@ export default function NewJobPage() {
               name="contactEmail"
               value={formData.contactEmail}
               onChange={handleChange}
-              className="w-full border-gray-300 bg-white text-gray-900 placeholder-gray-400 rounded-md shadow-sm p-2 border focus:border-[#E31837] focus:ring-[#E31837]"
+              className="w-full bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all"
               placeholder="e.g. john@example.com"
               required
             />
@@ -156,7 +156,7 @@ export default function NewJobPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#E31837] hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E31837] transition-colors disabled:opacity-50"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#E31837] hover:bg-red-700 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all disabled:opacity-50"
           >
             {loading ? 'Submitting...' : 'Submit Job Request'}
           </button>

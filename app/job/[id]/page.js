@@ -106,10 +106,10 @@ export default function JobDetailPage() {
               value={job.status}
               onChange={handleStatusChange}
               disabled={isUpdating}
-              className={`border-gray-300 rounded-md shadow-sm p-2 text-sm font-medium border focus:ring-[#E31837] focus:border-[#E31837] ${
-                job.status === 'Open' ? 'text-green-700 bg-green-50' :
-                job.status === 'In Progress' ? 'text-blue-700 bg-blue-50' :
-                'text-gray-700 bg-gray-50'
+              className={`bg-white border border-gray-300 rounded-md shadow-sm p-2 text-sm font-medium focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all disabled:opacity-60 ${
+                job.status === 'Open' ? 'text-green-700' :
+                job.status === 'In Progress' ? 'text-blue-700' :
+                'text-gray-700'
               }`}
             >
               <option value="Open">Open</option>
@@ -145,7 +145,7 @@ export default function JobDetailPage() {
           <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className="px-6 py-2 border border-[#E31837] text-[#E31837] hover:bg-red-50 font-medium rounded-md transition-colors disabled:opacity-50"
+            className="px-6 py-2 border border-red-200 text-red-500 hover:bg-red-50 hover:border-red-500 font-medium rounded-md transition-colors duration-200 disabled:opacity-50"
           >
             {isDeleting ? 'Deleting...' : 'Delete Request'}
           </button>

@@ -59,7 +59,7 @@ export default function HomePage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs.map((job) => (
-            <div key={job._id} className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md transition-shadow">
+            <div key={job._id} className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 flex flex-col transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg">
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-xl font-semibold text-gray-900 line-clamp-1">{job.title}</h2>
                 <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
@@ -79,7 +79,7 @@ export default function HomePage() {
 
               <Link 
                 href={`/job/${job._id}`}
-                className="mt-auto block text-center w-full bg-gray-50 hover:bg-gray-100 text-[#E31837] font-medium py-2 rounded border border-gray-200 transition-colors"
+                className="mt-auto block text-center w-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-medium py-2 rounded transition-colors duration-200"
               >
                 View Details
               </Link>
