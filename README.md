@@ -1,16 +1,40 @@
-Act as an expert technical writer. Please generate a highly professional, clean README.md file for the frontend repository of my "GTNA TradeBoard" project. 
+# GTNA TradeBoard - Frontend Client
 
-The frontend is built using Next.js (App Router) and Tailwind CSS, utilizing the official Global Training Network Alliances brand colors.
+## Description
+This is the client-side user interface for the GTNA TradeBoard application. It allows authenticated Customers to post requests and Service Providers to manage jobs, featuring live search and category filtering.
 
-The README must include these exact sections with proper Markdown formatting:
-1. Project Title: GTNA TradeBoard - Frontend Client
-2. Description: A brief summary stating this is the client-side user interface for the GTNA TradeBoard application, allowing Customers to post requests and Service Providers to manage jobs.
-3. Tech Stack: A bulleted list showing Next.js (App Router), Tailwind CSS, and Fetch API.
-4. Environment Variables: A code block showing the required keys for a `.env.local` file:
-   - NEXT_PUBLIC_API_URL=http://localhost:5000/api (or your live Railway backend URL)
-5. Installation & Setup Instructions: Step-by-step terminal commands (`npm install`).
-6. How to Run: Commands for starting the development server (`npm run dev`).
-7. Architecture / Core Screens: A bulleted list explaining the 3-screen structure:
-   - Home Page: Displays job requests as interactive cards with hover animations and a category filter dropdown.
-   - New Job Form: Allows homeowners to post requests with robust client-side validation.
-   - Job Detail Page: Full job insights with status updates (Open, In Progress, Closed) and a delete action.
+## Tech Stack
+- **Next.js (App Router)**
+- **Tailwind CSS**
+- **Fetch API**
+
+## Environment Variables
+Create a `.env.local` file in the root directory and add the following key:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+*(Or replace with your live backend URL if deployed)*
+
+## Installation & Setup Instructions
+1. Clone the repository and navigate to the frontend directory.
+2. Install the required dependencies using npm:
+```bash
+npm install
+```
+
+## How to Run
+Start the development server using npm:
+```bash
+npm run dev
+```
+
+## Architecture / Core Screens
+- **Home Page:** Displays job requests as interactive cards with a live Search Bar and category filter dropdown.
+- **Login/Register:** Handles user authentication and stores JWT tokens securely.
+- **New Job Form:** Protected route that allows authenticated users to post requests with robust client-side validation.
+- **Job Detail Page:** Full job insights with status updates (Open, In Progress, Closed) and a protected delete action.
+
+## Features Included
+- **Local Storage Token Management:** Secure handling and storage of JWTs for authentication.
+- **Dynamic Navigation:** Conditional rendering of navigation elements based on the user's authentication state.
+- **Polished UI Interactions:** Clean, modern, and responsive user interface utilizing official GTNA branding.
